@@ -1,0 +1,4 @@
+code: 404
+shortDesc: Not Found
+category: Client Error
+descr: The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.
