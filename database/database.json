@@ -1,0 +1,73 @@
+{
+
+  "informational": [
+    {
+      "100": {
+        "code": "100",
+        "shortDescr": "Continue",
+        "description": "The initial part of a request has been received and has not yet been rejected by the server. The server intends to send a final response after the request has been fully received and acted upon.",
+        "details": "When the request contains an Expect header field that includes a 100-continue expectation, the 100 response indicates that the server wishes to receive the request payload body1. The client ought to continue sending the request and discard the 100 response.\n\nIf the request did not contain an Expect header field containing the 100-continue expectation, the client can simply discard this interim response.",
+        "category": "Informational"
+      },
+      "101": {
+        "code": "101",
+        "shortDescr": "Switching Protocol",
+        "description": "The server understands and is willing to comply with the client's request, via the Upgrade header field, for a change in the application protocol being used on this connection.",
+        "details": "The server MUST generate an Upgrade header field in the response that indicates which protocol(s) will be switched to immediately after the empty line that terminates the 101 response.\n\nIt is assumed that the server will only agree to switch protocols when it is advantageous to do so. For example, switching to a newer version of HTTP might be advantageous over older versions, and switching to a real-time, synchronous protocol might be advantageous when delivering resources that use such features.",
+        "category": "Informational"
+      },
+      "102": {
+        "code": "102",
+        "shortDescr": "Processing",
+        "description": "An interim response used to inform the client that the server has accepted the complete request, but has not yet completed it.",
+        "details": "This status code SHOULD only be sent when the server has a reasonable expectation that the request will take significant time to complete. As guidance, if a method is taking longer than 20 seconds (a reasonable, but arbitrary value) to process the server SHOULD return a 102 (Processing) response. The server MUST send a final response after the request has been completed.\n\nMethods can potentially take a long period of time to process, especially methods that support the Depth header. In such cases the client may time-out the connection while waiting for a response. To prevent this the server may return a 102 Processing status code to indicate to the client that the server is still processing the method.",
+        "category": "Informational"
+      }
+    }
+
+  ],
+
+  "success": [{
+
+    "200": {
+      "code": "200",
+      "shortDescr": "OK,The request has succeeded.",
+      "description": "The payload sent in a 200 response depends on the request method. For the methods defined by this specification, the intended meaning of the payload can be summarized as:\n\n    GET a representation of the target resource\n    HEAD the same representation as GET, but without the representation data\n    POST a representation of the status of, or results obtained from, the action;\n        PUT DELETE a representation of the status of the action;\n        OPTIONS a representation of the communications options;\n        TRACE a representation of the request message as received by the end server.\n",
+      "details": "Aside from responses to CONNECT, a 200 response always has a payload, though an origin server MAY generate a payload body of zero length. If no payload is desired, an origin server ought to send 204 No Content instead. For CONNECT, no payload is allowed because the successful result is a tunnel, which begins immediately after the 200 response header section.\n\nA 200 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls",
+      "category": "success"
+    }
+  }],
+
+  "redirection": [{
+    "300": {
+      "code": "301",
+      "shortDescr": "Multiple Choices",
+      "description": "The target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or user agent) can select a preferred representation by redirecting its request to one or more of those identifiers.",
+      "details": "In other words, the server desires that the user agent engage in reactive negotiation to select the most appropriate representation(s) for its needs1.\n\nIf the server has a preferred choice, the server SHOULD generate a Location header field containing a preferred choice's URI reference. The user agent MAY use the Location field value for automatic redirection."
+      "category": "redirection"
+    }
+  }],
+
+  "clientError": [{
+    "404": {
+      "code": "404",
+      "shortDescr": "Not Found",
+      "description": "The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.",
+      "details": "A 404 status code does not indicate whether this lack of representation is temporary or permanent; the 410 Gone status code is preferred over 404 if the origin server knows, presumably through some configurable means, that the condition is likely to be permanent.\n\nA 404 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls.",
+      "category": "clientError"
+    }
+  }],
+
+  "serverError": [{
+    "500": {
+      "code": "500",
+      "shortDescr": "Internal Server Error",
+      "description": "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+      "details": "",
+      "category":"serverError"
+    }
+  }]
+
+
+
+}
