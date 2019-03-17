@@ -43,7 +43,7 @@
       "code": "301",
       "shortDescr": "Multiple Choices",
       "description": "The target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or user agent) can select a preferred representation by redirecting its request to one or more of those identifiers.",
-      "details": "In other words, the server desires that the user agent engage in reactive negotiation to select the most appropriate representation(s) for its needs1.\n\nIf the server has a preferred choice, the server SHOULD generate a Location header field containing a preferred choice's URI reference. The user agent MAY use the Location field value for automatic redirection."
+      "details": "In other words, the server desires that the user agent engage in reactive negotiation to select the most appropriate representation(s) for its needs1.\n\nIf the server has a preferred choice, the server SHOULD generate a Location header field containing a preferred choice's URI reference. The user agent MAY use the Location field value for automatic redirection.",
       "category": "redirection"
     }
   }],
