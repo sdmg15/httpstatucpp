@@ -12,12 +12,12 @@ protected:
     std::__cxx11::string category;
     std::__cxx11::string code;
     std::__cxx11::string shortDesc;
+    std::string details;
 
     std::__cxx11::string desc;
-    std::ifstream codeFile;
-
+  
 public:
-    StatusCode(const std::__cxx11::string&);
+    StatusCode();
     //StatusCode(std::string category, unsigned int code, std::string sd);
     virtual ~StatusCode();
 
@@ -29,12 +29,15 @@ public:
 
     std::__cxx11::string getDesc() const;
 
+    std::string getDetails() const; 
+
     void setCategory(const std::__cxx11::string& );
 
     void setCode(const std::__cxx11::string& );
 
     void setShortDesc(const std::__cxx11::string& );
     void setDesc(const std::__cxx11::string& );
+    void setDetails(const std::string&);
 
 };
 

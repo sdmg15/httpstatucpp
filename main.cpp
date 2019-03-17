@@ -3,20 +3,40 @@
 #include <vector>
 #include <fstream>
 #include <cstdlib>
+#include <map>
 #include <cassert>
+#include <stdexcept>
 #include "StatusCode.hpp"
+#include "libs/json.hpp"
 
-#define pathDatabase "pathDatabase"
+#define DATABASE_PATH "database/database.json"
+
+
+void display(const StatusCode& s){
+
+    std::cout << "Code : " << s.getCode() << std::endl ;
+    std::cout << "Category : " << s.getCategory() << std::endl ;
+    std::cout << "Short Descr : " << s.getShortDesc() << std::endl ;
+    std::cout << "Description : " << s.getDesc() << std::endl ;
+    std::cout << "Details : " << s.getDetails() << std::endl ;
+}
 
 int main(int argc,char** argv) {
 
 
+    using Json = nlohmann::json;
 
-    auto envPath = getenv(pathDatabase);
+    //auto envPath = getenv(DATABASE_PATH);
 
-    assert(nullptr != envPath );
+    std::map<char,std::string> categoryValues = {
+        {'1',"informational"},
+        {'2',"success"},
+        {'3',"redirection"},
+        {'4',"clientError"},
+        {'5',"serverError"}
+    };
 
-    std::string path = std::string(envPath);
+    std::string path = std::string(DATABASE_PATH);
 
     CLI::App app{"Get http statuses code meaning right in your terminal ! "};
 
@@ -43,32 +63,56 @@ int main(int argc,char** argv) {
     code->callback([&](){
 
         if(sCode.empty()) {
-
             std::cerr << "Sorry but the code is required !"<< std::endl;
-        }else {
-            std::string codePath = path+"/"+sCode+".txt";
+        }else { 
+            // Reading information about the code from the Json 
+            // If the size of the sCode is greater than 3 then bad code 
 
-            StatusCode statusCode(codePath);
+            if( sCode.size() > 3){
+                std::cerr << "The specified code is invalid :(" << std::endl;
+                return;
+            }
+            try{
+                std::ifstream database(DATABASE_PATH);
+                Json json; 
+                // Reading the database into json 
+                database >> json ;
 
-            std::cout<< "Code : " << statusCode.getCode() << std::endl;
+                //Looking for the code's category inside the map 
+                std::string category;
 
-            std::cout<< "" << std::endl;
+                auto it = categoryValues.find(sCode.at(0));
 
-            std::cout<< "Short Description :" << statusCode.getShortDesc() << std::endl;
+                if(  it != categoryValues.end() ){
+                    // Now we know the category to which the code belongs to
+                    category = it->second;
+                    
+                    auto foundCode = json[category][0][sCode];
+                    StatusCode statusCode;
 
-            std::cout<< "" << std::endl;
+                    statusCode.setCode(foundCode["code"]);
+                    statusCode.setShortDesc(foundCode["shortDescr"]);
+                    statusCode.setDesc(foundCode["description"]);
+                    statusCode.setDetails(foundCode["details"]);
+                    statusCode.setCategory(foundCode["category"]);
 
-            std::cout<< "Category :" << statusCode.getCategory() << std::endl;
+                     display(statusCode);
 
-            std::cout<< "" << std::endl;
-            std::cout<< "Description :" << statusCode.getDesc() << std::endl;
+                }else{
+                    std::cerr << "The specified code is invalid "<< std::endl ;
+                }
 
+            }catch(const std::exception& e){
+                std::cerr << "Cannot open the file" << std::endl;
+            }
         }
     });
 
     CLI11_PARSE(app, argc, argv);
 
-    std::cout<< "" << std::endl;
+    std::cout << "\n"<< std::endl;
+
+    std::cout<< "Information took from https://httpstatuses.com/" << std::endl;
 
 
 }
