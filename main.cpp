@@ -38,7 +38,7 @@ int main(int argc,char** argv) {
 
     std::string path = std::string(DATABASE_PATH);
 
-    CLI::App app{"Get http statuses code meaning right in your terminal ! "};
+    CLI::App app{"Get http status codes meaning right in your terminal ! "};
 
     app.require_subcommand(1);
 
@@ -58,7 +58,7 @@ int main(int argc,char** argv) {
 
     code->add_option("code",
                    sCode,
-                   "The code that the meaning should be displayed");
+                   "The code which the meaning should be displayed");
 
     code->callback([&](){
 

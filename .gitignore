@@ -3,3 +3,4 @@ CMakeCache.txt
 build/
 cmake_install.cmake 
 CMakeFiles/
+Makefile
