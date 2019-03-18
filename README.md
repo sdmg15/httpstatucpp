@@ -14,16 +14,15 @@ http status codes right in your terminal.
 
 ### Building 
 
-If all requirements are met, before building you need to set the `pathDatabase`
-environment variable. The variable holds the path to the `database` folder. If no 
-such variable is provided the build may fail.
-
-`~$ export pathDatabase=/path/to/database/folder`
+If all requirements are met, then you are ready to build !
 
 Run this command to inform CMake about the build process 
+
 `~$ cmake CMakeLists.txt` 
 
-then run `~$ make `
+then run the command below to build
+
+`~$ make `
 
 The resulted binary will be located inside the `build` directory.
 
@@ -47,4 +46,6 @@ Here is an example on how to run the command :
  - [ ] code serverError -- display all serverError status codes 
  
  - [ ] Enhance displaying of the result
+ 
+ - [ ] Export the resulted binary to /usr/local
     
