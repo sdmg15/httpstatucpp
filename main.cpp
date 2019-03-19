@@ -8,12 +8,23 @@
 #include <stdexcept>
 #include "StatusCode.hpp"
 #include "libs/json.hpp"
+#include <typeinfo>
+#include <cstdio>
 
 #define DATABASE_PATH "database/database.json"
 
 using Json = nlohmann::json;
 
-void display(const StatusCode& s){
+
+
+template <typename T>
+void display(StatusCode& s,const T& json){
+
+    s.setCode(json["code"]);
+    s.setShortDesc(json["shortDescr"]);
+    s.setDesc(json["description"]);
+    s.setDetails(json["details"]);
+    s.setCategory(json["category"]);
 
     std::cout << "Code : " << s.getCode() << std::endl ;
     std::cout << "Category : " << s.getCategory() << std::endl ;
@@ -26,16 +37,8 @@ void displayCategory(const std::string& category, const Json& json){
     auto codes = json[category][0];
 
     for(auto const& codeCategory: codes){
-
         StatusCode statusCode;
-
-        statusCode.setCode(codeCategory["code"]);
-        statusCode.setShortDesc(codeCategory["shortDescr"]);
-        statusCode.setDesc(codeCategory["description"]);
-        statusCode.setDetails(codeCategory["details"]);
-        statusCode.setCategory(codeCategory["category"]);
-
-        display(statusCode);
+        display<decltype(codeCategory)>(statusCode,codeCategory);
     }
 
 }
@@ -113,13 +116,7 @@ int main(int argc,char** argv) {
                     auto foundCode = json[category][0][sCode];
                     StatusCode statusCode;
 
-                    statusCode.setCode(foundCode["code"]);
-                    statusCode.setShortDesc(foundCode["shortDescr"]);
-                    statusCode.setDesc(foundCode["description"]);
-                    statusCode.setDetails(foundCode["details"]);
-                    statusCode.setCategory(foundCode["category"]);
-
-                     display(statusCode);
+                     display<decltype(foundCode)>(statusCode,foundCode);
 
                 }else{
                     std::cerr << "The specified code is invalid "<< std::endl ;
