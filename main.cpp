@@ -11,6 +11,7 @@
 
 #define DATABASE_PATH "database/database.json"
 
+using Json = nlohmann::json;
 
 void display(const StatusCode& s){
 
@@ -21,10 +22,25 @@ void display(const StatusCode& s){
     std::cout << "Details : " << s.getDetails() << std::endl ;
 }
 
+void displayCategory(const std::string& category, const Json& json){
+    auto codes = json[category][0];
+
+    for(auto const& codeCategory: codes){
+
+        StatusCode statusCode;
+
+        statusCode.setCode(codeCategory["code"]);
+        statusCode.setShortDesc(codeCategory["shortDescr"]);
+        statusCode.setDesc(codeCategory["description"]);
+        statusCode.setDetails(codeCategory["details"]);
+        statusCode.setCategory(codeCategory["category"]);
+
+        display(statusCode);
+    }
+
+}
+
 int main(int argc,char** argv) {
-
-
-    using Json = nlohmann::json;
 
     //auto envPath = getenv(DATABASE_PATH);
 
@@ -37,6 +53,11 @@ int main(int argc,char** argv) {
     };
 
     std::string path = std::string(DATABASE_PATH);
+
+    std::ifstream database(DATABASE_PATH);
+    Json json;
+    // Reading the database into json
+    database >> json ;
 
     CLI::App app{"Get http status codes meaning right in your terminal ! "};
 
@@ -63,7 +84,13 @@ int main(int argc,char** argv) {
     code->callback([&](){
 
         if(sCode.empty()) {
-            std::cerr << "Sorry but the code is required !"<< std::endl;
+            // Either it's an error or we want to display for a specific category
+            if(bInformational) displayCategory("informational",json);
+            if(bSuccess) displayCategory("success",json);
+            if(bRedirection) displayCategory("redirection",json);
+            if(bClient) displayCategory("clientError",json);
+            if(bServer) displayCategory("serverError",json);
+
         }else { 
             // Reading information about the code from the Json 
             // If the size of the sCode is greater than 3 then bad code 
@@ -73,10 +100,6 @@ int main(int argc,char** argv) {
                 return;
             }
             try{
-                std::ifstream database(DATABASE_PATH);
-                Json json; 
-                // Reading the database into json 
-                database >> json ;
 
                 //Looking for the code's category inside the map 
                 std::string category;
