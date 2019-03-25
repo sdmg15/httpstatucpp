@@ -45,7 +45,7 @@ Here is an example on how to run the command :
  
  - [x] code serverError -- display all serverError status codes 
  
- - [ ] Enhance displaying of the result
+ - [] Enhance displaying of the result
   
  - [] Export the resulted binary to /usr/local
     
