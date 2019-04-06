@@ -47,7 +47,7 @@ int main(int argc,char** argv) {
 
     //auto envPath = getenv(DATABASE_PATH);
 
-    std::map<char,std::string> categoryValues = {
+    const std::map<char,std::string> categoryValues = {
         {'1',"informational"},
         {'2',"success"},
         {'3',"redirection"},
