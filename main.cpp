@@ -1,5 +1,5 @@
 #include <iostream>
-#include "libs/CLI11.hpp"
+#include "CLI/CLI.hpp"
 #include <vector>
 #include <fstream>
 #include <cstdlib>
@@ -7,11 +7,11 @@
 #include <cassert>
 #include <stdexcept>
 #include "StatusCode.hpp"
-#include "libs/json.hpp"
+#include "nlohmann/json.hpp"
 #include <typeinfo>
 #include <cstdio>
 
-#define DATABASE_PATH "database/database.json"
+#define DATABASE_PATH "../database/database.json"
 
 using Json = nlohmann::json;
 
