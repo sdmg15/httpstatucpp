@@ -9,34 +9,34 @@
 class StatusCode {
 
 protected:
-    std::__cxx11::string category;
-    std::__cxx11::string code;
-    std::__cxx11::string shortDesc;
+    std::string shortDesc;
+    std::string category;
+    std::string code;
     std::string details;
 
-    std::__cxx11::string desc;
+    std::string desc;
   
 public:
     StatusCode();
     //StatusCode(std::string category, unsigned int code, std::string sd);
     virtual ~StatusCode();
 
-    std::__cxx11::string getCategory() const;
+    std::string getCategory() const;
 
-    std::__cxx11::string getCode() const ;
+    std::string getCode() const ;
 
-    std::__cxx11::string getShortDesc() const;
+    std::string getShortDesc() const;
 
-    std::__cxx11::string getDesc() const;
+    std::string getDesc() const;
 
     std::string getDetails() const; 
 
-    void setCategory(const std::__cxx11::string& );
+    void setCategory(const std::string& );
 
-    void setCode(const std::__cxx11::string& );
+    void setCode(const std::string& );
 
-    void setShortDesc(const std::__cxx11::string& );
-    void setDesc(const std::__cxx11::string& );
+    void setShortDesc(const std::string& );
+    void setDesc(const std::string& );
     void setDetails(const std::string&);
 
 };
