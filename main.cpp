@@ -10,8 +10,9 @@
 #include "nlohmann/json.hpp"
 #include <typeinfo>
 #include <cstdio>
+#include <catch2/catch.hpp>
 
-#define DATABASE_PATH "../database/database.json"
+#define DATABASE_PATH "database/database.json"
 
 using Json = nlohmann::json;
 
@@ -55,8 +56,6 @@ int main(int argc,char** argv) {
         {'5',"serverError"}
     };
 
-    std::string path = std::string(DATABASE_PATH);
-
     std::ifstream database(DATABASE_PATH);
     Json json;
     // Reading the database into json
@@ -65,8 +64,6 @@ int main(int argc,char** argv) {
     CLI::App app{"Get http status codes meaning right in your terminal ! "};
 
     app.require_subcommand(1);
-
-    std::string enteredCode;
 
     bool bInformational,bSuccess,bRedirection,bClient,bServer;
 
