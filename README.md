@@ -32,7 +32,11 @@ Before running make sure you are in the `build` folder.
 
 Here is an example on how to run the command : 
 
-`~$ ./httpstatucpp code 404`
+`~$ ./httpstatucpp code 100`
+
+Sample result :
+
+![Sample result](images/result-100.png)
 
 ## Todo 
  - [x] code success -- display all success status codes
@@ -45,9 +49,9 @@ Here is an example on how to run the command :
  
  - [x] code serverError -- display all serverError status codes 
  
- - [ ] Enhance displaying of the result
+ - [x] Enhance displaying of the result
   
  - [ ] Export the resulted binary to /usr/local
  
- - [ ] Display output screenshots
+ - [x] Display output screenshots
     
