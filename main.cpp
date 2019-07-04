@@ -15,10 +15,33 @@
 #include "src/Table.hpp"
 
 #define DATABASE_PATH "database/database.json"
+#define MAX_ROW_LENGTH 30
 
 using Json = nlohmann::json;
 
 
+std::string& limitStringLength(std::string&& str){
+    std::string tmp;
+    std::stringstream ss(str);
+    std::vector<std::string> res;
+    int count = 0;
+
+    while( getline(ss,tmp,' ') ){
+        
+        if( ++count%MAX_ROW_LENGTH == 0){
+            res.push_back("\n");
+        }else{
+            res.push_back( tmp + " " );
+        }
+    }
+    str.clear();
+
+    for(auto const& st : res){
+        str+= st;
+    }
+
+    return str;
+}
 
 template <typename T>
 void display(StatusCode& s,const T& json){
@@ -28,14 +51,13 @@ void display(StatusCode& s,const T& json){
     s.setDesc(json["description"]);
     s.setDetails(json["details"]);
     s.setCategory(json["category"]);
-
     CliTable::Options opt;
     CliTable::TableBody content = {
                             { "Code"     ,        s.getCode() },
                             { "Category" ,        s.getCategory()        },
                             { "Short Description"         ,     s.getShortDesc() },
-                            { " Description"     ,   s.getDesc() },
-                            { "Details" ,  s.getDetails()    },
+                            { " Description"     ,  limitStringLength( s.getDesc()) },
+                            { "Details" ,  limitStringLength( s.getDetails() )   },
                         };
 
     CliTable::Table table(opt,content);
