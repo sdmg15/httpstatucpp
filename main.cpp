@@ -11,6 +11,8 @@
 #include <typeinfo>
 #include <cstdio>
 #include <catch2/catch.hpp>
+#include "src/Utils.hpp"
+#include "src/Table.hpp"
 
 #define DATABASE_PATH "database/database.json"
 
@@ -27,11 +29,19 @@ void display(StatusCode& s,const T& json){
     s.setDetails(json["details"]);
     s.setCategory(json["category"]);
 
-    std::cout << "Code : " << s.getCode() << std::endl ;
-    std::cout << "Category : " << s.getCategory() << std::endl ;
-    std::cout << "Short Descr : " << s.getShortDesc() << std::endl ;
-    std::cout << "Description : " << s.getDesc() << std::endl ;
-    std::cout << "Details : " << s.getDetails() << std::endl ;
+    CliTable::Options opt;
+    CliTable::TableBody content = {
+                            { "Code"     ,        s.getCode() },
+                            { "Category" ,        s.getCategory()        },
+                            { "Short Description"         ,     s.getShortDesc() },
+                            { " Description"     ,   s.getDesc() },
+                            { "Details" ,  s.getDetails()    },
+                        };
+
+    CliTable::Table table(opt,content);
+    //Generating the final table 
+
+    table.generate();
 }
 
 void displayCategory(const std::string& category, const Json& json){
