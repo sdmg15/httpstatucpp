@@ -5,34 +5,40 @@ http status codes right in your terminal.
 
 ## Building and running
 
+**NB:** If you don't want to build it yourself you can download prebuild binaries following this link
+https://github.com/sdmg15/httpstatucpp/releases
+
  ### Requirements
 
 * CMake (min 3.13)
 * Clang or g++ 7.3.0
+* Conan - C++ package manager
 
 **NB :** This was tested only on Ubuntu 18.08 (Bionic)
 
 ### Building 
 
-If all requirements are met, then you are ready to build !
+- Create the build directory and change to it : 
+ 
+`mkdir build && cd $_ `
 
-Run this command to inform CMake about the build process 
+- Install the dependencies using conan :
 
-`~$ cmake CMakeLists.txt` 
+`conan install .. `
 
-then run the command below to build
+- Build finaly :
 
-`~$ make `
+`cmake --build ..`
 
-The resulted binary will be located inside the `build` directory.
+The resulting binary could be found in the `bin` folder.
 
 ### Running 
 
-Before running make sure you are in the `build` folder.
+You can alias the command and/or symlink it to be able to run it globally.
 
 Here is an example on how to run the command : 
 
-`~$ ./httpstatucpp code 100`
+`~$ httpstatucpp code 100`
 
 Sample result :
 
