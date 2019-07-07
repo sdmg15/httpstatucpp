@@ -21,15 +21,15 @@ public:
     //StatusCode(std::string category, unsigned int code, std::string sd);
     virtual ~StatusCode();
 
-    std::string getCategory() const;
+    auto getCategory() const -> std::string;
 
-    std::string getCode() const ;
+    auto getCode() const-> std::string ;
 
-    std::string getShortDesc() const;
+    auto getShortDesc() const-> std::string;
 
-    std::string getDesc() const;
+    auto getDesc() const -> std::string;
 
-    std::string getDetails() const; 
+    auto getDetails() const-> std::string; 
 
     void setCategory(const std::string& );
 

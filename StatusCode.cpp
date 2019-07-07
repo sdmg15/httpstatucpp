@@ -11,22 +11,22 @@ StatusCode::StatusCode(){}
 StatusCode::~StatusCode() {
 }
 
-std::string StatusCode::getCategory() const{
+auto StatusCode::getCategory() const -> std::string {
     return this->category;
 }
 
-std::string StatusCode::getCode() const {
+auto StatusCode::getCode() const -> std::string{
     return this->code;
 }
 
 std::string StatusCode::getShortDesc() const {
     return this->shortDesc;
 }
-std::string StatusCode::getDesc() const {
+auto StatusCode::getDesc() const->std::string  {
     return this->desc;
 }
 
-std::string StatusCode::getDetails() const{
+auto StatusCode::getDetails() const -> std::string{
     return this->details; 
 }
 
